@@ -4,13 +4,13 @@ import rego.v1
 
 default decision = false
 
-# Always allow Admins
-decision = {"result": "ALLOW"} if {
-    "group:Admin" in input.identity.claims
+test_admin_allowed {
+  decision with input as {"identity": {"claims": ["group:Admin"]}} == {"result": "ALLOW"}
 }
 
-# Allow Maintainers to read
-decision = {"result": "ALLOW"} if {
-    "group:Maintainer" in input.identity.claims
-    input.permission.name == "catalog.entity.read"
+test_maintainer_read_allowed {
+  decision with input as {
+    "identity": {"claims": ["group:Maintainer"]},
+    "permission": {"name": "catalog.entity.read"}
+  } == {"result": "ALLOW"}
 }
