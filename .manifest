@@ -1,2 +1,2 @@
 rbac_policy.rego
-rbac_test_policy.rego
+rbac_policy_test.rego
