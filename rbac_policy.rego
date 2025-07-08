@@ -2,7 +2,7 @@ package rbac_policy
 
 import rego.v1
 
-default decision = {"result": "DENY"}
+default decision = false
 
 # Always allow Admins
 decision = {"result": "ALLOW"} if {
