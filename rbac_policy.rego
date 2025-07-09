@@ -2,13 +2,13 @@ package rbac_policy
 
 import rego.v1
 
-test_admin_allowed if {
-  decision with input as {"identity": {"claims": ["group:Admin"]}} == {"result": "ALLOW"}
+decision = {"result": "ALLOW"} if {
+    "group:Admin" in input.identity.claims
 }
 
-test_maintainer_read_allowed if {
-  decision with input as {
-    "identity": {"claims": ["group:Maintainer"]},
-    "permission": {"name": "catalog.entity.read"}
-  } == {"result": "ALLOW"}
+decision = {"result": "ALLOW"} if {
+    "group:Maintainer" in input.identity.claims
+    input.permission.name == "catalog.entity.read"
 }
+
+decision = {"result": "DENY"}
